@@ -1,23 +1,10 @@
 ---
-- name: ping hosts
-  hosts: all
-
-  tasks:
-    - ping: ~
-
-- name: install nginx
+- name: install ruby and its dependencies
   hosts: local
   become: true
   
   tasks:
-    - name: install ruby
-      apt:
-        name: ruby
-        state: latest
-
-#    - name: Add node.js 10 repostory
-#     command: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-    - name: install dependencies for ruby and nodejs package
+    - name: install dependencies for ruby app
       action: 'apt pkg={{item}} state=present'
       with_items: 
         - git-core
@@ -40,8 +27,45 @@
         - redis-tools
         - nodejs
         - yarn
-        - ruby
-        - ruby-dev
         - ri
         - git               #to download portal source code
         - python-mysqldb    #required for ansible mysql modules
+
+    - name: get rbenv from github
+      git: >
+        repo=https://github.com/rbenv/rbenv.git
+        dest=/home/abraham/.rbenv
+      
+    - name: add PATH variable to bashrc
+      lineinfile: 
+        path: /home/abraham/.bashrc
+        line: 'export PATH="$HOME/.rbenv/bin:$PATH"'
+        regexp: ".rbenv/bin"
+
+    - name: add eval to bashrc
+      lineinfile: 
+        path: /home/abraham/.bashrc
+        line: 'eval "$(rbenv init -)"'
+        regexp: "rbenv init -"
+
+    - name: get rbenv build from github
+      git: >
+        repo=https://github.com/rbenv/ruby-build.git
+        dest=/home/abraham/.rbenv/plugins/ruby-build
+      
+    - name: add ruby-build PATH variable to bashrc
+      lineinfile: 
+        path: /home/abraham/.bashrc
+        line: 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
+        regexp: "ruby-build"
+
+    - name: get rbenv vars from github
+      git: >
+        repo=https://github.com/rbenv/rbenv-vars.git
+        dest=/home/abraham/.rbenv/plugins/ruby-vars
+
+    - name: execute shell
+      shell: exec $SHELL
+
+    - name: install the required version of ruby using rbenv
+      command: zsh -lc "rbenv install 2.6.3"
