@@ -1,4 +1,5 @@
 ---
+# used script template at: https://serversforhackers.com/c/create-user-in-ansible
 - name: add users for deployment of app
   hosts: local
   become: true
