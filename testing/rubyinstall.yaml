@@ -5,31 +5,35 @@
   
   tasks:
     - name: install dependencies for ruby app
-      action: 'apt pkg={{item}} state=present'
-      with_items: 
-        - git-core
-        - curl 
-        - zlib1g-dev
-        - build-essential
-        - libssl-dev
-        - libreadline-dev
-        - libyaml-dev
-        - libxml2-dev
-        - libxslt1-dev
-        - libcurl4-openssl-dev
-        - software-properties-common
-        - libffi-dev
-        - dirmngr
-        - gnupg
-        - apt-transport-https
-        - ca-certificates
-        - redis-server
-        - redis-tools
-        - nodejs
-        - yarn
-        - ri
-        - git               #to download portal source code
-        - python-mysqldb    #required for ansible mysql modules
+      apt: 
+        name: "{{packages}}"
+        state: present
+      vars:
+        packages: 
+          - git-core
+          - curl 
+          - zlib1g-dev
+          - build-essential
+          - libssl-dev
+          - libreadline-dev
+          - libyaml-dev
+          - libsqlite3-dev
+          - sqlite3
+          - libxml2-dev
+          - libxslt1-dev
+          - libcurl4-openssl-dev
+          - software-properties-common
+          - libffi-dev
+          - dirmngr
+          - gnupg
+          - apt-transport-https
+          - ca-certificates
+          - redis-server
+          - redis-tools
+          - nodejs
+          - yarn
+          - git             #to download portal source code
+          - python-mysqldb  #required for ansible mysql modules
 
     - name: install the ruby 2.6.3 using snap
       snap: 
