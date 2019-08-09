@@ -39,3 +39,8 @@
       snap: 
         name: ruby
         classic: yes
+
+    - name: install bundler
+      gem: 
+        name: bundler
+        state: latest
