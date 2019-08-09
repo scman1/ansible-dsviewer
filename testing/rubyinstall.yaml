@@ -31,41 +31,7 @@
         - git               #to download portal source code
         - python-mysqldb    #required for ansible mysql modules
 
-    - name: get rbenv from github
-      git: >
-        repo=https://github.com/rbenv/rbenv.git
-        dest=/home/abraham/.rbenv
-      
-    - name: add PATH variable to bashrc
-      lineinfile: 
-        path: /home/abraham/.bashrc
-        line: 'export PATH="$HOME/.rbenv/bin:$PATH"'
-        regexp: ".rbenv/bin"
-
-    - name: add eval to bashrc
-      lineinfile: 
-        path: /home/abraham/.bashrc
-        line: 'eval "$(rbenv init -)"'
-        regexp: "rbenv init -"
-
-    - name: get rbenv build from github
-      git: >
-        repo=https://github.com/rbenv/ruby-build.git
-        dest=/home/abraham/.rbenv/plugins/ruby-build
-      
-    - name: add ruby-build PATH variable to bashrc
-      lineinfile: 
-        path: /home/abraham/.bashrc
-        line: 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
-        regexp: "ruby-build"
-
-    - name: get rbenv vars from github
-      git: >
-        repo=https://github.com/rbenv/rbenv-vars.git
-        dest=/home/abraham/.rbenv/plugins/ruby-vars
-
-    - name: execute shell
-      shell: exec $SHELL
-
-    - name: install the required version of ruby using rbenv
-      command: zsh -lc "rbenv install 2.6.3"
+    - name: install the ruby 2.6.3 using snap
+      snap: 
+        name: ruby
+        classic: yes
