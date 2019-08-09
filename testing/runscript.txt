@@ -1,1 +1,2 @@
-ansible-playbooks rubyinstall.yaml -i inventory/hosts.ini --ask-sudo-pass
+ansible-playbook addusers.yaml -i inventory/hosts.ini --ask-sudo-pass
+ansible-playbook rubyinstall.yaml -i inventory/hosts.ini --ask-sudo-pass
