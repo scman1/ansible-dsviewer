@@ -1,0 +1,21 @@
+---
+- name: install nginx
+  hosts: local
+  become: true
+  
+  tasks:
+    - name: install nginx using apt
+      apt: 
+        name: nginx
+        state: present
+
+    - name: Enable nginx access through the firewall
+      ufw:
+        name: Nginx HTTP
+        rule: allow
+        state: enabled
+  
+    - name: install nginx packages using apt
+      apt: 
+        name: ['nginx-extras', 'libnginx-mod-http-passenger' 
+        state: present
