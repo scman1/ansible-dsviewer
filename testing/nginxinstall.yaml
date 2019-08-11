@@ -15,7 +15,19 @@
         rule: allow
         state: enabled
   
-    - name: install nginx packages using apt
+    - name: add key for passenger
+      #command: apt-key adv --keyserver hpk://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 561F9B9CAC40B2F7
+        state: present
+
+    - name: add passenger repository
+      apt_repository:
+        repo: deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main
+        state: present
+
+    - name: install passenger libraries for nginx
       apt: 
-        name: ['nginx-extras', 'libnginx-mod-http-passenger' 
+        name: ['nginx-extras', 'libnginx-mod-http-passenger']
         state: present
