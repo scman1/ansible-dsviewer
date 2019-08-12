@@ -6,10 +6,10 @@
   tasks:
     - name: install dependencies for ruby app
       apt: 
-        name: "{{packages}}"
+        name: '{{packages}}'
         state: present
-      vars:
-        packages: 
+      vars: 
+        packages:
           - git-core
           - curl 
           - zlib1g-dev
@@ -17,8 +17,6 @@
           - libssl-dev
           - libreadline-dev
           - libyaml-dev
-          - libsqlite3-dev
-          - sqlite3
           - libxml2-dev
           - libxslt1-dev
           - libcurl4-openssl-dev
@@ -32,15 +30,47 @@
           - redis-tools
           - nodejs
           - yarn
-          - git             #to download portal source code
-          - python-mysqldb  #required for ansible mysql modules
+          - git               #to download portal source code
+          - python-mysqldb    #required for ansible mysql modules
 
-    - name: install the ruby 2.6.3 using snap
-      snap: 
-        name: ruby
-        classic: yes
+    - name: get rbenv from github
+      git: >
+        repo=https://github.com/rbenv/rbenv.git
+        dest=/home/deploy/.rbenv
+      
+    - name: add PATH variable to bashrc
+      lineinfile: 
+        path: /home/deploy/.bashrc
+        line: 'export PATH="$HOME/.rbenv/bin:$PATH"'
+        regexp: ".rbenv/bin"
 
-    - name: install bundler
-      gem: 
-        name: bundler
-        state: latest
+    - name: add eval to bashrc
+      lineinfile: 
+        path: /home/deploy/.bashrc
+        line: 'eval "$(rbenv init -)"'
+        regexp: "rbenv init -"
+
+    - name: get rbenv build from github
+      git: >
+        repo=https://github.com/rbenv/ruby-build.git
+        dest=/home/deploy/.rbenv/plugins/ruby-build
+      
+    - name: add ruby-build PATH variable to bashrc
+      lineinfile: 
+        path: /home/deploy/.bashrc
+        line: 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
+        regexp: "ruby-build"
+
+    - name: get rbenv vars from github
+      git: >
+        repo=https://github.com/rbenv/rbenv-vars.git
+        dest=/home/deploy/.rbenv/plugins/ruby-vars
+    # this one is not running ok yet need to change ownership  
+    # to /home/deploy/.rbenv
+    # and run from prompt
+#    - name: execute shell
+#      shell: exec $SHELL
+
+    # same as previous this does not run from ansible if ownership is not changed
+#    - name: install ruby 2.6.3
+#      command: rbenv install 2.6.3
