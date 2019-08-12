@@ -31,5 +31,19 @@
       apt: 
         name: ['nginx-extras', 'libnginx-mod-http-passenger']
         state: present
+
     # configure passenger
-    
+    # replace the line that points to the default ruby
+    # point to the ruby installed using snap
+    - name: replace default ruby in passenger ini
+      lineinfile:
+        path: /etc/nginx/conf.d/mod-http-passenger.conf
+        regexp: 'passenger_ruby'
+        line: passenger_ruby /snap/ruby/current
+
+    - name: start nginx service
+      service:
+        name: nginx
+        state: restarted
+
+
