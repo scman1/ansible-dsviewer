@@ -14,9 +14,9 @@
         name: Nginx HTTP
         rule: allow
         state: enabled
-  
+
+    # need to add key and reposityory before trying to install passenger  
     - name: add key for passenger
-      #command: apt-key adv --keyserver hpk://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
       apt_key:
         keyserver: keyserver.ubuntu.com
         id: 561F9B9CAC40B2F7
@@ -31,3 +31,5 @@
       apt: 
         name: ['nginx-extras', 'libnginx-mod-http-passenger']
         state: present
+    # configure passenger
+    

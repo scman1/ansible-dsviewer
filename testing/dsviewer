@@ -1,0 +1,40 @@
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# https://www.nginx.com/resources/wiki/start/
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+# https://wiki.debian.org/Nginx/DirectoryStructure
+#
+# ds viewer is deployed to dsviewer 
+# this file will be copied to /etc/nginx/sites-enabled
+# before copying it change the myapp name to the name of the folder where the 
+# production app will reside
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default configuration
+#
+server {
+	listen 80;
+	listen [::]:80;
+
+
+        server_name _;
+	root /home/deploy/dsviewer/current/public;
+
+        passenger _enabled on;
+        passenger _app_env production;
+
+	location /cable {
+		passenger_app_group_name myapp_websocket;
+                passenger_force_max_concurrent_requests_per_process 0;
+	}
+
+        # Allow uploads up to 100MB in size
+        client_max_body_size 100m;
+        location ~^/(assets|packs){
+                expires max;
+                gzip_static on;
+        }
+}
