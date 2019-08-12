@@ -29,7 +29,7 @@
 
     - name: install passenger libraries for nginx
       apt: 
-        name: ['nginx-extras', 'libnginx-mod-http-passenger']
+        name: ['libnginx-mod-http-passenger']
         state: present
 
     # configure passenger
@@ -39,11 +39,24 @@
       lineinfile:
         path: /etc/nginx/conf.d/mod-http-passenger.conf
         regexp: 'passenger_ruby'
-        line: passenger_ruby /snap/ruby/current
+        line: passenger_ruby /snap/ruby/current;
+    
 
-    - name: start nginx service
+    # remove default landing site
+    - name: remove nginx default site
+      file: 
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    # copy config file to sites enabled
+    # !!! edit to set according to the deployment server
+    - name: copy app configuration file
+      copy:
+        src: dsviewer
+        dest: /etc/nginx/sites-enabled/dsviewer
+
+    # restart nginx service after configuring passenger
+    - name: restart nginx service
       service:
         name: nginx
         state: restarted
-
-
