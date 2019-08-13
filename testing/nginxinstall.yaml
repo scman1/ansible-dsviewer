@@ -4,17 +4,6 @@
   become: true
   
   tasks:
-    - name: install nginx using apt
-      apt: 
-        name: nginx
-        state: present
-
-    - name: Enable nginx access through the firewall
-      ufw:
-        name: Nginx HTTP
-        rule: allow
-        state: enabled
-
     # need to add key and reposityory before trying to install passenger  
     - name: add key for passenger
       apt_key:
@@ -29,7 +18,7 @@
 
     - name: install passenger libraries for nginx
       apt: 
-        name: ['libnginx-mod-http-passenger']
+        name: ['nginx-extras', 'libnginx-mod-http-passenger']
         state: present
 
     # configure passenger
@@ -39,7 +28,7 @@
       lineinfile:
         path: /etc/nginx/conf.d/mod-http-passenger.conf
         regexp: 'passenger_ruby'
-        line: passenger_ruby /snap/ruby/current;
+        line: passenger_ruby /home/deploy/.rbenv/shims/ruby;
     
 
     # remove default landing site
