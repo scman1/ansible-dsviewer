@@ -65,12 +65,20 @@
       git: >
         repo=https://github.com/rbenv/rbenv-vars.git
         dest=/home/deploy/.rbenv/plugins/ruby-vars
+
     # this one is not running ok yet need to change ownership  
     # to /home/deploy/.rbenv
     # and run from prompt
 #    - name: execute shell
 #      shell: exec $SHELL
 
-    # same as previous this does not run from ansible if ownership is not changed
+    # not working properly this does not run from ansible if ownership is not changed
 #    - name: install ruby 2.6.3
 #      command: rbenv install 2.6.3
+    # install/update bundler to latest version
+
+# not working yet
+#    - name: install bundler gem
+#      gem:
+#        name: bundler
+#        state: latest
