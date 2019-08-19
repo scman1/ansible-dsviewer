@@ -1,0 +1,43 @@
+#basic tasks required for preparing the deployment environment
+#  1. add deploy user
+#  2. add package dependencies
+- name: Add deploy user
+  user: 
+        name: deploy
+        password: '$6$wbxiWLP7IpH$KaTzp05SmP/EG1Ce6hHJh7Y.fuX0fWSouX3o6LyrHksO4rHyT3ltRgiYF8TbgIrqPQS2UaIa3YsDl7t3bpJhf0'
+        groups:
+          - sudo
+        state: present
+        shell: /bin/bash
+        system: no
+        create_home: yes
+        home: /home/deploy
+
+- name: install dependencies for rails app 
+  apt: 
+    name: '{{packages}}'
+    state: present
+  vars: 
+    packages:
+      - git-core
+      - curl 
+      - zlib1g-dev
+      - build-essential
+      - libssl-dev
+      - libreadline-dev
+      - libyaml-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - libcurl4-openssl-dev
+      - software-properties-common
+      - libffi-dev
+      - dirmngr
+      - gnupg
+      - apt-transport-https
+      - ca-certificates
+      - redis-server
+      - redis-tools
+      - nodejs
+      - yarn
+      - git               #to download portal source code
+      - python-mysqldb    #required for ansible mysql modules
