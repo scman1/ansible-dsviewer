@@ -4,8 +4,7 @@ Build scripts test status: [![Build Status](https://travis-ci.org/BioVeL/ansible
 
 ## Requirements
 
-These playbooks are tested on Ubuntu 12.04.  There are likely to be issues
-using later versions of Ubuntu or other distributions.
+These playbooks are tested on Ubuntu 18.04 LTS. There may likely to be issues using different versions of Ubuntu or other distributions.
 
 There are definitely problems awaiting users of non-APT distributions - all
 the plays using `&apt` will need an equivalent for these other distributions.

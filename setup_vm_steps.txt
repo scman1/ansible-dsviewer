@@ -1,0 +1,37 @@
+Setting up a virtual machine 
+
+Configure port forwarding for connecting from the host (local machine) 
+to map a loopback port to the host broadcast address and port
+eg:
+host 127.0.0.1:2522 guest [address can be blank]:22
+
+Install openssh server on the vm guest and make sute it is running
+
+$ sudo apt-get install openssh-server 
+$ ps -A | grep sshd
+
+To create deploy user need to generate a key for login, run:
+
+mkpasswd --method=sha-512
+
+Use ssh-copy-id to install SSH key on servers as authorized keys for passwordless 
+authentication.
+
+pattern:
+ssh-copy-id [-p port] [user@]machine
+
+ssh-copy-id -p 2522 abraham@127.0.0.1 
+
+Edit SSH config file to create a host alias to connect (~/.ssh/config). 
+The entry should look something like:
+
+Host deployvm
+    HostName 127.0.0.1
+    Port 2522
+    User abraham
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+At this point, the host alias can be used in the ansible hosts file  (inventory/hosts) 
+and used when connecting to the host.
+
