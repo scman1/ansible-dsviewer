@@ -1,7 +1,0 @@
----
-- hosts: taverna-server
-  sudo: true
-
-  tasks:
-    - name: Install unzip
-      apt: pkg=unzip state=present

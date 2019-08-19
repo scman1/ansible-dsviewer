@@ -1,5 +1,0 @@
----
-- hosts: deploying
-  become: true
-  roles:
-    - basic
