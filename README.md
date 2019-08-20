@@ -53,12 +53,14 @@ $ ansible-playbook -K playbooks/server.yaml
 ```
 To finish get the source code of the app from git, add capistrano and run capistrano to publish the app.
 
-##Funding
+## Funding
+
 This code was created to deploy the dsviewer demonstrator onto a Virtual Machine, as part of the ICEDIG project
 https://icedig.eu/ 
 ICEDIG a DiSSCo Project
 H2020-INFRADEV-2016-2017 – Grant Agreement No. 777483
 Funded by the Horizon 2020 Framework Programme of the European Union
 
-##References
+## References
+
 The deployment steps are based on the deployment guide at: https://gorails.com/deploy/ubuntu/18.04#vps and from the ansible book for deploying the BioVeL portal https://github.com/BioVeL/ansible-playbooks
