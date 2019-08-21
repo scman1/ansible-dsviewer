@@ -41,5 +41,5 @@
       - yarn
       - git               #to download portal source code
       - python-mysqldb    #required for ansible mysql modules
-      - sqlite3
-      - sqlite3-dev
+      - sqlite3 # app defaults to sqlite3 even if no db is used
+      - libsqlite3-dev # required for bundle install to succeed 

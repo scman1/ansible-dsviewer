@@ -41,6 +41,14 @@
     recurse: yes
     owner: deploy
     group: deploy
+
+# copy config file to sites enabled
+# !!! temporary this file must be manually edited to add cookie signing key
+# !!! do not leave as it is on deploy server
+- name: copy vars file
+  copy:
+    src: vars.txt
+    dest: /home/deploy/.rbenv-vars
     
 #############################################
 # The following tasks are not running so need to run from shell directly
