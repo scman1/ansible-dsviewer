@@ -4,7 +4,7 @@
 - name: Add deploy user
   user: 
         name: deploy
-        password: '$6$wbxiWLP7IpH$KaTzp05SmP/EG1Ce6hHJh7Y.fuX0fWSouX3o6LyrHksO4rHyT3ltRgiYF8TbgIrqPQS2UaIa3YsDl7t3bpJhf0'
+        password: 'agoodhardtoguesspassword'
         groups:
           - sudo
         state: present
